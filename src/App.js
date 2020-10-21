@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
-import Selector from './Selector';
+import Datapanel from './Datapanel';
 import './App.css';
 
 
@@ -8,8 +8,7 @@ class App extends Component {
   render() {
     return (
       <div>
-      <h1 className="App">Hello!</h1>
-      <Selector />
+      <Datapanel />
       </div>
     );
   }
