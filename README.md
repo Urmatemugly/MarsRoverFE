@@ -1,68 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Mars Rover Dashboard
 
-## Available Scripts
+This project consumes a developer API provided by NASA. API key is stored in a '.env' file which is ignored by git.
 
-In the project directory, you can run:
+## Required -
 
-### `yarn start`
+Project has been broken into two repos;
+Backend: `https://github.com/Urmatemugly/MarsRoverBE.git`
+Frontend: `https://github.com/Urmatemugly/MarsRoverFE.git`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## To open the project
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+You'll need to run a server for each client and server sides of this application.
 
-### `yarn test`
+The client server (React) runs on `http://localhost:3000 `
+to start navigate terminal inside 'Frontend' directory and type the command:  `npm start`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In another terminal window, inside the 'Backend' directory, type the command: `node server.js` or `nodemon server.js` if the nodemon package is installed.
 
-### `yarn build`
+## What does it do?
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The project forms part of the 'Intermedia Javascript Nanodegree' offered by Udacity, www.udacity.com. Included in this directory is the project rubric by which it'll be marked.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Goals:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+User clicks name of rover
+Express queries NASA API + returns data to client
+React (client) displays rubirc-required data
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Component Structure;
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`App />`  instantiates Datapanel component
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`Datapanel />`  **stateful** The data panel is where I'm storing my state variables, this component also sends props to Button component. HTML elements are updated in render dependent on state.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+`Button />`   **dumb** depending on props provided, displays three buttons
