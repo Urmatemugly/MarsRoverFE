@@ -20,20 +20,22 @@ class Datapanel extends Component {
       land:'',
       status:'',
       imgs:[],
-      dates:[],
+      dates:[]
     };
     /** Bind (this) **/
-    this.getRoverName = this.getRoverName.bind(this);
+    this.getRoverData = this.getRoverData.bind(this);
   }
 
-  /** Update state when button is Clicked**/
-  async getRoverName(name){
+  /** Update state when button is Clicked **/
+  async getRoverData(name){
     this.setState({ chosen: true, name: (name)});
     const { data } = await axios.get(`/rovers/${name}`)
-    const land = data.response.photo_manifest.landing_date
-    const launch = data.response.photo_manifest.launch_date
-    const status = data.response.photo_manifest.status
-    this.setState({ launch: launch, land: land, status: status});
+    console.log(data.response.latest_photos);
+    const land = data.response.latest_photos[0].rover.landing_date
+    const launch = data.response.latest_photos[0].rover.launch_date
+    const status = data.response.latest_photos[0].rover.status
+    const image = data.response.latest_photos[0].img_src
+    this.setState({ launch: launch, land: land, status: status, imgs: image});
   }
 
 
@@ -41,28 +43,26 @@ class Datapanel extends Component {
   componentDidMount() {
 
   }
-  //    axios.get("/apod").then(response => {
-  //   console.log(response.data)
-  // }}
 
-  /** Render clickable buttons, displaying currently clicked**/
+  /** Render clickable buttons, displaying currently clicked **/
   render(){
     return (
       <div className="App">
       <h1>Mars Rover Dashboard</h1>
+      {this.props.rovers.map(rover =>
+        <Button key={rover} roverData={this.getRoverData} name={rover}/>
+      )}
       {this.state.chosen ?
         <div>
         <h2>{this.state.name}</h2>
         <p>Launch Date: {this.state.launch}</p>
         <p>Landing Date: {this.state.land} </p>
         <p>Status: {this.state.status}</p>
+        <img src={this.state.imgs}/>
         </div>
         :
         <h2>Click a button to get started!</h2>
-      }
-      {this.props.rovers.map(rover =>
-        <Button key={rover} getRover={this.getRoverName} name={rover}/>
-      )}
+      }      
       </div>
     )
   }

@@ -8,7 +8,7 @@ class Button extends Component {
   }
 
   handleClick(evt){
-    this.props.getRover(this.props.name)
+    this.props.roverData(this.props.name)
   }
 
   /** Map over rovernames (props) & create button for each with eventListener**/
