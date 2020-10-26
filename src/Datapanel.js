@@ -27,25 +27,19 @@ class Datapanel extends Component {
   }
 
   /** Update state when button is Clicked**/
-  getRoverName(name){
+  async getRoverName(name){
     this.setState({ chosen: true, name: (name)});
-    const state = this.state
-    const options = {
-      method: 'POST',
-      header: {
-        'Content-Type': 'json'
-      },
-      body: JSON.stringify(state.name)
-    }
-    fetch(`/api/${state.name}`, options);
+    const { data } = await axios.get(`/rovers/${name}`)
+    const land = data.response.photo_manifest.landing_date
+    const launch = data.response.photo_manifest.launch_date
+    const status = data.response.photo_manifest.status
+    this.setState({ launch: launch, land: land, status: status});
   }
 
 
   /** After component reaches render method, get data from API **/
   componentDidMount() {
-      axios.get('/apod').then(response => {
-        console.log(response.data);
-      })
+
   }
   //    axios.get("/apod").then(response => {
   //   console.log(response.data)
@@ -67,7 +61,7 @@ class Datapanel extends Component {
         <h2>Click a button to get started!</h2>
       }
       {this.props.rovers.map(rover =>
-        <Button getRover={this.getRoverName} name={rover}/>
+        <Button key={rover} getRover={this.getRoverName} name={rover}/>
       )}
       </div>
     )
