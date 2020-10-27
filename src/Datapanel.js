@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from './Button.js';
+import Img from './Img.js';
 import axios from 'axios';
 
 class Datapanel extends Component {
@@ -20,7 +21,7 @@ class Datapanel extends Component {
       land:'',
       status:'',
       imgs:[],
-      dates:[]
+      date:[]
     };
     /** Bind (this) **/
     this.getRoverData = this.getRoverData.bind(this);
@@ -30,12 +31,15 @@ class Datapanel extends Component {
   async getRoverData(name){
     this.setState({ chosen: true, name: (name)});
     const { data } = await axios.get(`/rovers/${name}`)
-    console.log(data.response.latest_photos);
+
+    const photos = data.response.latest_photos.map(photo => photo.img_src);
     const land = data.response.latest_photos[0].rover.landing_date
     const launch = data.response.latest_photos[0].rover.launch_date
     const status = data.response.latest_photos[0].rover.status
-    const image = data.response.latest_photos[0].img_src
-    this.setState({ launch: launch, land: land, status: status, imgs: image});
+    const date = data.response.latest_photos[0].earth_date
+
+
+    this.setState({ launch: launch, land: land, status: status, imgs: photos, date: date});
   }
 
 
@@ -46,6 +50,14 @@ class Datapanel extends Component {
 
   /** Render clickable buttons, displaying currently clicked **/
   render(){
+    /** If images are available, render them (study source: https://www.debuggr.io/react-map-of-undefined/#wrapping-up)**/
+    let imgUrls;
+    if (this.state.imgs) {
+      imgUrls = this.state.imgs.map(url => {
+        return <img src={url}/>
+      })
+
+    }
     return (
       <div className="App">
       <h1>Mars Rover Dashboard</h1>
@@ -58,11 +70,13 @@ class Datapanel extends Component {
         <p>Launch Date: {this.state.launch}</p>
         <p>Landing Date: {this.state.land} </p>
         <p>Status: {this.state.status}</p>
-        <img src={this.state.imgs}/>
+          <div>
+            {imgUrls}
+          </div>
         </div>
         :
         <h2>Click a button to get started!</h2>
-      }      
+      }
       </div>
     )
   }
